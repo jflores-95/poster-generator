@@ -1,3 +1,50 @@
-.albumMin {
-    height: 80px;
-}
+/* Estilos para la lista de resultados */
+
+.ul {
+    list-style-type: none;
+    margin: 0 30px;
+    padding: 0;
+  }
+  
+  /* Estilos para cada elemento de la lista de resultados */
+  li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: white;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+  }
+  
+  /* Estilos para la imagen de cada elemento */
+  .albumMin {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Estilos para el texto de cada elemento */
+  span {
+    font-size: 18px;
+    color: black;
+  }
+  
+  /* Estilos para el efecto hover */
+  li:hover {
+      padding: 20px;
+
+    background-color: #CEF9F2;
+    border: 1px solid #4A7B9D;
+    cursor: pointer;
+    transition: padding 0.2s ease;
+  }
+
+  li:hover .albumMin {
+    /* Aumentando el tamaño de la imagen */
+    transform: scale(1.2);
+    /* Agregando un efecto fade */
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 0.8;
+  }

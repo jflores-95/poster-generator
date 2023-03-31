@@ -6,6 +6,7 @@ function SearchBar() {
   const [results, setResults] = useState([]);
 
   const search = async () => {
+    setResults([])
     const response = await fetch(`http://localhost:3000/search?term=${query}&limit=${20}`);
     const data = await response.json();
     setResults(data);
@@ -15,18 +16,18 @@ function SearchBar() {
   };
 
   return (
-    <div>
-      <input type="text" value={query} onChange={handleChange} />
-      <button onClick={search}>Search</button>
-      <ul>
-        {results.map((result) => (
-          <li key={result.name}>
-            <img className="albumMin" src={result.artworkUrl} alt={result.name} />
-            <span>{result.name}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
+<div>
+  <input type="text" value={query} onChange={handleChange} />
+  <button onClick={search}>Search</button>
+  <ul>
+    {results.map((result) => (
+      <li className="search-result" key={result.name}>
+        <img className="albumMin" src={result.artworkUrl} alt={result.name} />
+        <span>{result.name}</span>
+      </li>
+    ))}
+  </ul>
+</div>
   );
 }
 
