@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import './searchBar.styles.css';
+import * as Styled from "./searchBar.styled.js";
+
+
 
 function SearchBar() {
   const [query, setQuery] = useState('');
@@ -16,18 +19,18 @@ function SearchBar() {
   };
 
   return (
-<div>
-  <input type="text" value={query} onChange={handleChange} />
-  <button onClick={search}>Search</button>
-  <ul>
+<Styled.Container>
+  <Styled.Input type="text" value={query} onChange={handleChange} />
+  <Styled.SearchButton onClick={search}>Search</Styled.SearchButton>
+  <Styled.AlbumList>
     {results.map((result) => (
-      <li className="search-result" key={result.name}>
-        <img className="albumMin" src={result.artworkUrl} alt={result.name} />
-        <span>{result.name}</span>
-      </li>
+      <Styled.Result className="search-result" key={result.name}>
+        <Styled.Album className="albumMin" src={result.artworkUrl} alt={result.name} />
+        <Styled.Title>{result.name}</Styled.Title>
+      </Styled.Result>
     ))}
-  </ul>
-</div>
+  </Styled.AlbumList>
+</Styled.Container>
   );
 }
 
