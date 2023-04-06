@@ -1,21 +1,69 @@
 import React, { useState } from 'react';
-import * as Styled from "./searchBar.styled.js";
+import * as Styled from './searchBar.styled.js';
 
 function SearchBar() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
   const search = async () => {
-    setResults([])
+    setResults([]);
     const response = await fetch(`http://localhost:3000/search?term=${query}&limit=${20}`);
     const data = await response.json();
     setResults(data);
   };
 
+  
+
   const handleChange = (event) => {
     setQuery(event.target.value);
   };
 
+  const handleAlbumHover = (event) => {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+
+    img.src = event.target.src;
+
+    img.onload = () => {
+      const { width, height } = img;
+      canvas.width = width;
+      canvas.height = height;
+      context.drawImage(img, 0, 0, width, height);
+
+      const imageData = context.getImageData(0, 0, width, height);
+      const colors = getColors(imageData);
+
+      const album = event.target.parentElement;
+      
+      album.style.boxShadow = `0px 0px 50px 10px rgba(${colors[0]}, ${colors[1]}, ${colors[2]}, 0.5)`;
+    };
+  };
+
+  const handleAlbumUnhover = (event) => {
+    const album = event.target.parentElement;
+    album.style.boxShadow = '';
+  };
+
+  const getColors = (imageData) => {
+    const colors = { red: 0, green: 0, blue: 0, count: 0 };
+
+    for (let i = 0; i < imageData.data.length; i += 4) {
+      colors.red += imageData.data[i];
+      colors.green += imageData.data[i + 1];
+      colors.blue += imageData.data[i + 2];
+      colors.count++;
+    }
+
+    colors.red = Math.floor(colors.red / colors.count);
+    colors.green = Math.floor(colors.green / colors.count);
+    colors.blue = Math.floor(colors.blue / colors.count);
+
+    return [colors.red, colors.green, colors.blue];
+  };
+
+  
   const printPalette = async (src) => {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -86,6 +134,8 @@ function SearchBar() {
               className="albumMin"
               src={result.artworkUrl}
               alt={result.name}
+              onMouseEnter={handleAlbumHover}
+              onMouseLeave={handleAlbumUnhover}
               onClick={() => printPalette(result.artworkUrl)}
             />
             <Styled.Title>{result.name}</Styled.Title>

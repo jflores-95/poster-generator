@@ -1,14 +1,5 @@
 import styled from 'styled-components';
 
-export const Canvas = styled.canvas`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-`;
-
 // Estilos para el input del search bar
 export const Input = styled.input`
   border: none;
@@ -61,6 +52,22 @@ export const Result = styled.li`
   &:hover {
     transform: translateY(-5px);
   }
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
 `;
 
 export const Album = styled.img`
@@ -74,4 +81,25 @@ export const Title = styled.span`
   color: #007ACC;
   text-align: center;
   font-family: Montserrat, sans-serif;
+`;
+
+export const Palette = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  pointer-events: none;
+`;
+
+export const Color = styled.div`
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+  border-radius: 80%;
+  background-color: ${props => props.color};
 `;
