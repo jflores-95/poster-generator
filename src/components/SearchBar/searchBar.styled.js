@@ -1,16 +1,12 @@
 import styled from 'styled-components';
 
-// Estilos para el contenedor del search bar
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: Montserrat, sans-serif;
-  background-color: #0d1117;
-  color: #c9d1d9;
-  padding: 20px;
-  height: 100vh;
+export const Canvas = styled.canvas`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  z-index: 1;
 `;
 
 // Estilos para el input del search bar
