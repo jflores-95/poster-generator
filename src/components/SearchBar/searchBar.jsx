@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import * as Styled from './searchBar.styled.js';
+import KMeans from 'kmeans-js';
 
+
+let palette = [];
 function SearchBar() {
   const [query, setQuery] = useState('');
+  const [albumInfo, setAlbumInfo] = useState(null)
   const [results, setResults] = useState([]);
+
 
   const search = async () => {
     setResults([]);
@@ -12,6 +17,12 @@ function SearchBar() {
     setResults(data);
   };
 
+  const handleSelectedAlbum = async (albumId) => {
+    const response = await fetch(`http://localhost:3000/albumId?albumId=${albumId}`);
+    const data = await response.json();
+    data.palette = palette;
+    setAlbumInfo(data);
+  };
   
 
   const handleChange = (event) => {
@@ -37,7 +48,7 @@ function SearchBar() {
 
       const album = event.target.parentElement;
       
-      album.style.boxShadow = `0px 0px 50px 10px rgba(${colors[0]}, ${colors[1]}, ${colors[2]}, 0.5)`;
+      album.style.boxShadow = `0px 0px 50px 10px rgba(${colors[0]}, ${colors[1]}, ${colors[2]}, 0.7)`;
     };
   };
 
@@ -78,6 +89,7 @@ function SearchBar() {
 
       // get palette
       const colors = getPalette(ctx, 6);
+      palette = colors;
       console.log(colors);
     };
     img.src = src;
@@ -86,42 +98,32 @@ function SearchBar() {
   const getPalette = (ctx, nColors) => {
     const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
     const pixels = imageData.data;
-    const colorCounts = {};
-
-    // loop through pixels and count color occurrences
+  
+    // create an array of pixels in the format [r, g, b, a]
+    const pixelArray = [];
     for (let i = 0; i < pixels.length; i += 4) {
-      const r = pixels[i];
-      const g = pixels[i + 1];
-      const b = pixels[i + 2];
-      const rgb = `${r},${g},${b}`;
-
-      if (r < 50 && g < 50 && b < 50) {
-        // ignore very dark colors
-        continue;
-      }
-
-      if (colorCounts[rgb]) {
-        colorCounts[rgb]++;
-      } else {
-        colorCounts[rgb] = 1;
-      }
+      pixelArray.push([pixels[i], pixels[i + 1], pixels[i + 2], pixels[i + 3]]);
     }
-
-    // sort colors by count
-    const colorKeys = Object.keys(colorCounts);
-    colorKeys.sort((a, b) => {
-      return colorCounts[b] - colorCounts[a];
+  
+    // use k-means to cluster the colors
+    const kmeans = new KMeans();
+    const clusters = kmeans.cluster(pixelArray, nColors);
+  
+    // get the average color of each cluster
+    clusters.map((cluster) => {
+      const r = cluster.reduce((acc, val) => acc + val[0], 0) / cluster.length;
+      const g = cluster.reduce((acc, val) => acc + val[1], 0) / cluster.length;
+      const b = cluster.reduce((acc, val) => acc + val[2], 0) / cluster.length;
+      return [r, g, b];
     });
-
-    // get top n colors
-    const topColors = [];
-    for (let i = 0; i < Math.min(nColors, colorKeys.length); i++) {
-      topColors.push(colorKeys[i]);
-    }
-
-    // convert colors to arrays of RGB values
-    return topColors.map((color) => color.split(',').map(Number));
+  
+    return clusters;
   };
+
+  const selectAlbum = (album) => {
+    printPalette(album.artworkUrl);
+    handleSelectedAlbum(album.albumId);
+  }
 
   return (
     <>
@@ -129,14 +131,14 @@ function SearchBar() {
       <Styled.SearchButton onClick={search}>Search</Styled.SearchButton>
       <Styled.AlbumList>
         {results.map((result) => (
-          <Styled.Result className="search-result" key={result.name}>
+          <Styled.Result className="search-result" key={result.artworkUrl}>
             <Styled.Album
               className="albumMin"
               src={result.artworkUrl}
               alt={result.name}
               onMouseEnter={handleAlbumHover}
               onMouseLeave={handleAlbumUnhover}
-              onClick={() => printPalette(result.artworkUrl)}
+              onClick={() => selectAlbum(result)}
             />
             <Styled.Title>{result.name}</Styled.Title>
           </Styled.Result>
