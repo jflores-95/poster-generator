@@ -39,9 +39,13 @@ export const AlbumList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  a {
+text-decoration: none;
+  }
 `;
 
 export const Result = styled.li`
+
   margin: 10px;
   display: flex;
   flex-direction: column;
@@ -103,3 +107,5 @@ export const Color = styled.div`
   border-radius: 80%;
   background-color: ${props => props.color};
 `;
+
+

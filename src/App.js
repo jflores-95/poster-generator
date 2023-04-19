@@ -10,7 +10,12 @@ export default function App() {
  <div className="App">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/album" element={<Album />} />
+        <Route path="/album/:id" element={
+          <div className="posterCointainer">
+        <Album/>
+
+          </div>
+        } />
       </Routes>
  </div>
      
