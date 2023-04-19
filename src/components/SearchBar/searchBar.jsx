@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as Styled from './searchBar.styled.js';
 import KMeans from 'kmeans-js';
+import { Link } from "react-router-dom";
 
 
 let palette = [];
@@ -132,6 +133,7 @@ function SearchBar() {
       <Styled.AlbumList>
         {results.map((result) => (
           <Styled.Result className="search-result" key={result.artworkUrl}>
+             <Link to={{ pathname: '/album', state: { mensaje:"HOLA" } }}>
             <Styled.Album
               className="albumMin"
               src={result.artworkUrl}
@@ -140,6 +142,7 @@ function SearchBar() {
               onMouseLeave={handleAlbumUnhover}
               onClick={() => selectAlbum(result)}
             />
+            </Link>
             <Styled.Title>{result.name}</Styled.Title>
           </Styled.Result>
         ))}

@@ -17,6 +17,7 @@ export const Container = styled.body`
 
 export const Top = styled.div`
   display:flex;
+  height: 80%;  
   flex-direction: row;
 `
 
@@ -39,6 +40,7 @@ export const AlbumArt = styled.img`
 `
 
 export const DataContainer = styled.div`
+height: 100%;
 color: #060504;
 margin: 0 100px 100px 100px;
 overflow: hidden;
@@ -100,13 +102,7 @@ flex-direction: column;
 
 
 
-export const OutNow = styled.span`
-display: flex;
-font-family: "Bebas Neue", sans-serif;
-font-size: 50px;
-font-weight: bold;
-align-self: flex-end;
-`
+
 export const OutNowInfo = styled.span`
 display: flex;
 font-family: Montserrat, sans-serif;
@@ -126,11 +122,13 @@ export const Color = styled.span`
 
 // Estilos de lista de canciones
 export const SongList = styled.ul`
-  display: table; /* Agregar display: table para convertir la lista en una tabla */
-width: 100%;
+  display: table;
+  width: 100%;
   list-style: none;
   margin: 0;
   padding: 0;
+  font-size:larger;
+  table-layout: fixed; /* Agregar esta propiedad para que las tablas tengan un ancho fijo */
 `;
 
 export const SongContainer = styled.div`
@@ -145,6 +143,11 @@ export const SongContainer = styled.div`
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+  }
+
+  /* Agregar un ancho fijo para las tablas */
+  ul {
+    width: 90%;
   }
 `;
 

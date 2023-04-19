@@ -1,12 +1,18 @@
+import React from "react";
 import './App.css';
-import Home from './modules/home/home';
+import { Routes, Route} from "react-router-dom";
+import Home from "../src/modules/home/home"
+import Album from "../src/modules/posterPreview/posterPreview"
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <Home/>
-    </div>
+   
+ <div className="App">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/album" element={<Album />} />
+      </Routes>
+ </div>
+     
   );
 }
-
-export default App;

@@ -2,34 +2,44 @@ import React from 'react'
 import * as Styled from "./posterPreview.styled"
 import { mockDataRegularAlbum, mockDataSingle, mockTwoColorOnly, largeTitle, faces, x100pre, unVeranoSinTi, YHLQMDLG } from './mockData.mock'
 
-
-export default function posterPreview({
-
-}) {
+const PosterPreview = () => {
 
   const ALBUM = YHLQMDLG;
+
+  const chunk = (arr, size) => {
+    return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
+      arr.slice(i * size, i * size + size)
+    );
+  }
+  
+
   return (
     <>
       <Styled.Container>
         <Styled.ImageContainer id="imageContainer">
-          <Styled.TitleContainer>{ALBUM?.albumName} BY {ALBUM?.artistName}  </Styled.TitleContainer>
+        <Styled.TitleContainer>{ALBUM?.albumName} BY {ALBUM?.artistName}  </Styled.TitleContainer>
+
           <Styled.AlbumArt src={ALBUM.artWork} alt={mockDataRegularAlbum.albumName} />
         </Styled.ImageContainer>
 
         <Styled.DataContainer id="dataContainer">
 
           <Styled.Top id="Top">
-            <Styled.SongContainer tracksNumber={ALBUM?.trackList?.length}>
-              <Styled.SongList>
-                {ALBUM?.trackList?.map((track, index) => (
-                  <Styled.SongItem key={index}>
-                    <Styled.SongTitle>
-                      {`${index + 1}. ${track?.trackName}`}
-                    </Styled.SongTitle>
-                  </Styled.SongItem>
+          <Styled.SongContainer>
+              {ALBUM?.trackList &&
+                chunk(ALBUM.trackList, 16).map((songGroup, groupIndex) => (
+                  <Styled.SongList key={groupIndex}>
+                    {songGroup.map((track, index) => (
+                      <Styled.SongItem key={index}>
+                        <Styled.SongTitle>
+                          {`${index + groupIndex * 16 + 1}. ${track?.trackName}`}
+                        </Styled.SongTitle>
+                      </Styled.SongItem>
+                    ))}
+                  </Styled.SongList>
                 ))}
-              </Styled.SongList>
             </Styled.SongContainer>
+
             <Styled.ReleaseInfo>
             <Styled.palette>
               {ALBUM?.palette?.map((color, index) => (
@@ -37,9 +47,7 @@ export default function posterPreview({
               ))}
             </Styled.palette>
             <Styled.AditionalInfo>
-              <Styled.OutNow>
-                Out Now
-              </Styled.OutNow>
+             
               <Styled.OutNowInfo>
               {ALBUM?.releaseDate}
               </Styled.OutNowInfo>
@@ -63,3 +71,6 @@ export default function posterPreview({
     </>
   )
 }
+
+
+export default PosterPreview;
