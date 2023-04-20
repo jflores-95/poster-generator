@@ -19,3 +19,11 @@
 }
 
 
+@font-face {
+  font-family: 'Grotesk Medium';
+  src: url('../public/Grotesk Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+

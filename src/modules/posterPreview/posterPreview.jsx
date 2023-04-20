@@ -2,16 +2,16 @@ import React, {useState, useEffect} from 'react'
 import * as Styled from "./posterPreview.styled"
 import { useParams } from 'react-router-dom'
 import KMeans from 'kmeans-js';
-import { mockDataRegularAlbum, mockDataSingle, mockTwoColorOnly, largeTitle, faces, x100pre, unVeranoSinTi, YHLQMDLG } from './mockData.mock'
 
 const PosterPreview = () => {
 
   const [album, setAlbum] = useState();
   let palette = [];
   const { id } = useParams();
+  const SONGS_BREAK = 13;
 
   useEffect(() => {
-    const handleSelectedAlbum = async (albumId) => {
+    const handleSelectedAlbum = async () => {
       const response = await fetch(`http://localhost:3000/albumId?albumId=${id}`);
       const data = await response.json();
       printPalette(data.artWork);
@@ -61,14 +61,12 @@ const PosterPreview = () => {
     const clusters = kmeans.cluster(pixelArray, nColors);
   
     // get the average color of each cluster
-    clusters.map((cluster) => {
+  clusters.map((cluster) => {
       const r = cluster.reduce((acc, val) => acc + val[0], 0) / cluster.length;
       const g = cluster.reduce((acc, val) => acc + val[1], 0) / cluster.length;
       const b = cluster.reduce((acc, val) => acc + val[2], 0) / cluster.length;
       return [r, g, b];
     });
-
-
   
     return clusters;
   };
@@ -96,12 +94,12 @@ const PosterPreview = () => {
           <Styled.Top id="Top">
           <Styled.SongContainer>
               {album?.trackList &&
-                chunk(album?.trackList, 16).map((songGroup, groupIndex) => (
+                chunk(album?.trackList, SONGS_BREAK).map((songGroup, groupIndex) => (
                   <Styled.SongList key={groupIndex}>
                     {songGroup.map((track, index) => (
                       <Styled.SongItem key={index}>
                         <Styled.SongTitle>
-                          {`${index + groupIndex * 16 + 1}. ${track?.trackName}`}
+                          {`${index + groupIndex * SONGS_BREAK + 1}. ${track?.trackName}`}
                         </Styled.SongTitle>
                       </Styled.SongItem>
                     ))}
@@ -115,24 +113,22 @@ const PosterPreview = () => {
                 <Styled.Color style={{ backgroundColor: `rgb(${color.join(",")})` }} key={index} />
               ))}
             </Styled.palette>
-            <Styled.AditionalInfo>
-             
-              <Styled.OutNowInfo>
-              {album?.releaseDate}
-              </Styled.OutNowInfo>
-              <Styled.OutNowInfo>
-              {album?.albumTime}
-              </Styled.OutNowInfo>
-              <Styled.OutNowInfo>
-             {album?.primaryGenreName}
-              </Styled.OutNowInfo>
-              <Styled.OutNowInfo>
-             {album?.contentAdvisoryRating}
-              </Styled.OutNowInfo>
-            </Styled.AditionalInfo>
+           
             </Styled.ReleaseInfo>
 
           </Styled.Top>
+          <Styled.Bottom>
+          <Styled.AditionalInfo>
+          {`${album?.albumTime} / ${album?.releaseDate}` } 
+             
+          </Styled.AditionalInfo>
+          <Styled.AditionalInfo>
+          {`${album?.copyright}` } 
+             
+          </Styled.AditionalInfo>
+              
+              
+          </Styled.Bottom>
           
         </Styled.DataContainer>
 

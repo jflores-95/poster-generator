@@ -17,7 +17,7 @@ export const Container = styled.body`
 
 export const Top = styled.div`
   display:flex;
-  height: 80%;  
+  height: max-content;  
   flex-direction: row;
 `
 
@@ -42,7 +42,7 @@ export const AlbumArt = styled.img`
 export const DataContainer = styled.div`
 height: 100%;
 color: #060504;
-margin: 0 100px 100px 100px;
+margin: 0 100px 0px 100px;
 overflow: hidden;
 `
 
@@ -96,8 +96,7 @@ export const Palette = styled.div`
 `;
 
 export const AditionalInfo = styled.span`
-display:flex;
-flex-direction: column;
+    display: flex;
 `;
 
 
@@ -140,6 +139,7 @@ export const SongContainer = styled.div`
   margin-bottom: 50px;
   flex-basis: 80%;
   font-weight: bold;
+  height: max-content;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -159,7 +159,7 @@ export const SongItem = styled.li`
 `;
 
 export const SongTitle = styled.span`
-  white-space: nowrap;
+text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
