@@ -21,7 +21,7 @@
 
 @font-face {
   font-family: 'Grotesk Medium';
-  src: url('../public/Grotesk Medium.ttf') format('truetype');
+  src: url('../public/Grotesk Medium.otf');
   font-weight: normal;
   font-style: normal;
 }

@@ -84,18 +84,16 @@ const PosterPreview = () => {
     <>
       <Styled.Container>
         <Styled.ImageContainer id="imageContainer">
-        <Styled.TitleContainer>{album?.albumName} BY {album?.artistName}  </Styled.TitleContainer>
-
           <Styled.AlbumArt src={album?.artWork} alt={album?.albumName} />
         </Styled.ImageContainer>
 
         <Styled.DataContainer id="dataContainer">
 
-          <Styled.Top id="Top">
+          <Styled.Top id="Top"> 
           <Styled.SongContainer>
               {album?.trackList &&
                 chunk(album?.trackList, SONGS_BREAK).map((songGroup, groupIndex) => (
-                  <Styled.SongList key={groupIndex}>
+                  <Styled.SongList key={groupIndex} tracks={album?.trackList.length}>
                     {songGroup.map((track, index) => (
                       <Styled.SongItem key={index}>
                         <Styled.SongTitle>
@@ -105,16 +103,19 @@ const PosterPreview = () => {
                     ))}
                   </Styled.SongList>
                 ))}
-            </Styled.SongContainer>
+          </Styled.SongContainer>
 
-            <Styled.ReleaseInfo>
+          <Styled.SecondPanel>
             <Styled.palette>
               {album?.palette?.map((color, index) => (
                 <Styled.Color style={{ backgroundColor: `rgb(${color.join(",")})` }} key={index} />
               ))}
             </Styled.palette>
-           
+            <Styled.ReleaseInfo>
+            <Styled.BottomTitle> “{album?.albumName}" by {album?.artistName}  </Styled.BottomTitle>
+
             </Styled.ReleaseInfo>
+          </Styled.SecondPanel>
 
           </Styled.Top>
           <Styled.Bottom>
@@ -126,7 +127,7 @@ const PosterPreview = () => {
           {`${album?.copyright}` } 
              
           </Styled.AditionalInfo>
-              
+          
               
           </Styled.Bottom>
           

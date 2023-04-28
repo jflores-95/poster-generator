@@ -82,10 +82,15 @@ export const ArtistName = styled.span`
 font-size: 3rem;
 `
 
-export const ReleaseInfo = styled.div`
+export const SecondPanel = styled.div`
   display: flex;
   flex-direction:column;
 `;
+
+export const ReleaseInfo = styled.div`
+display:flex;
+height: -webkit-fill-available;
+`
 
 // Estilos de paleta de colores
 export const Palette = styled.div`
@@ -96,8 +101,18 @@ export const Palette = styled.div`
 `;
 
 export const AditionalInfo = styled.span`
-    display: flex;
+display: flex;
 `;
+
+export const BottomTitle = styled.span`
+align-items: flex-end;
+    text-transform: uppercase;
+    font-family: "Grotesk Medium";
+    line-height: 1;
+    font-size: 2rem;
+    display: flex;
+    margin-bottom: 50px;
+`
 
 
 
@@ -121,12 +136,23 @@ export const Color = styled.span`
 
 // Estilos de lista de canciones
 export const SongList = styled.ul`
+
   display: table;
   width: 100%;
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size:larger;
+  font-size: ${({ tracks }) => {
+    if (tracks <= 9) {
+      return 'x-large';
+    } else if (tracks >= 10 && tracks <= 21) {
+      return 'large';
+    } else if (tracks > 20) {
+      return 'medium';
+    } else if (tracks > 30) {
+      return 'x-small';
+    }
+  }};
   table-layout: fixed; /* Agregar esta propiedad para que las tablas tengan un ancho fijo */
 `;
 
