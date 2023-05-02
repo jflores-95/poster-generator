@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import * as Styled from "./posterPreview.styled"
 import { useParams } from 'react-router-dom'
 import KMeans from 'kmeans-js';
-
+import html2canvas from 'html2canvas';
 const PosterPreview = () => {
 
   const [album, setAlbum] = useState();
@@ -79,10 +79,26 @@ const PosterPreview = () => {
     );
   }
   
+  const downloadPoster = () => {
+    // Obtener el contenedor que se va a descargar
+    const container = document.getElementById('full-poster');
+  
+    // Capturar una imagen del contenedor utilizando html2canvas
+    html2canvas(container,{ useCORS: true }).then((canvas) => {
+      // Convertir la imagen en una URL de datos
+      const imgData = canvas.toDataURL('image/png');
+  
+      // Crear un enlace de descarga y hacer clic en él para descargar la imagen
+      const link = document.createElement('a');
+      link.download = 'poster.png';
+      link.href = imgData;
+      link.click();
+    });
+  };
 
   return (
     <>
-      <Styled.Container>
+      <Styled.Container id="full-poster">
         <Styled.ImageContainer id="imageContainer">
           <Styled.AlbumArt src={album?.artWork} alt={album?.albumName} />
         </Styled.ImageContainer>
@@ -134,6 +150,7 @@ const PosterPreview = () => {
         </Styled.DataContainer>
 
       </Styled.Container>
+      <button onClick={downloadPoster}>Descargar como imagen</button>
     </>
   )
 }
