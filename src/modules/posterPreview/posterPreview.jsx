@@ -81,7 +81,16 @@ const PosterPreview = () => {
   
   const downloadPoster = () => {
     const container = document.getElementById('full-poster');
-    html2canvas(container,{ useCORS: true }).then((canvas) => {
+    const options = {
+      scrollY: 0,
+      useCORS: true, 
+      windowWidth:1080, 
+      windowHeight:1920, 
+      width: 1080, 
+      height: 1920, 
+      scrollX: -window.scrollX
+    }
+    html2canvas(container, options).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const link = document.createElement('a');
       link.download = 'poster.png';
