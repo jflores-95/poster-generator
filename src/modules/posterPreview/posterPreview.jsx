@@ -93,7 +93,7 @@ const PosterPreview = () => {
     html2canvas(container, options).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const link = document.createElement('a');
-      link.download = 'poster.png';
+      link.download = `${album?.albumName}_${album?.artistName}.png`;
       link.href = imgData;
       link.click();
     });
