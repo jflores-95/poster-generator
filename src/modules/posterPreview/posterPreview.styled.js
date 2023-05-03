@@ -190,5 +190,25 @@ text-align: left;
   text-overflow: ellipsis;
 `;
 
+export const DownloadButton = styled.button`
+position: fixed;
+bottom: 20px;
+left: 20px;
+z-index: 1;
+background-color: #007ACC;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease-in-out;
+  font-family: Montserrat, sans-serif;
+
+  &:hover {
+    background-color: #024c7e;
+  }
+`
+
 
 

@@ -80,15 +80,9 @@ const PosterPreview = () => {
   }
   
   const downloadPoster = () => {
-    // Obtener el contenedor que se va a descargar
     const container = document.getElementById('full-poster');
-  
-    // Capturar una imagen del contenedor utilizando html2canvas
     html2canvas(container,{ useCORS: true }).then((canvas) => {
-      // Convertir la imagen en una URL de datos
       const imgData = canvas.toDataURL('image/png');
-  
-      // Crear un enlace de descarga y hacer clic en él para descargar la imagen
       const link = document.createElement('a');
       link.download = 'poster.png';
       link.href = imgData;
@@ -148,9 +142,9 @@ const PosterPreview = () => {
           </Styled.Bottom>
           
         </Styled.DataContainer>
-
       </Styled.Container>
-      <button onClick={downloadPoster}>Descargar como imagen</button>
+      <Styled.DownloadButton id="downloadButton" onClick={downloadPoster}>Download as an image</Styled.DownloadButton>
+     
     </>
   )
 }
