@@ -11,7 +11,7 @@ function SearchBar() {
 
   const search = async () => {
     setResults([]);
-    const response = await fetch(`http://localhost:3000/search?term=${query}&limit=${20}`);
+    const response = await fetch(`${process.env.REACT_APP_ALBUM_ENDPOINT}:${process.env.REACT_APP_PORT_API}/search?term=${query}&limit=${20}`);
     const data = await response.json();
     setResults(data);
   };

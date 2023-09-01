@@ -12,7 +12,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/album/:id" element={
           <div className="posterCointainer">
-        <Album/>
+            <Album/>
 
           </div>
         } />
