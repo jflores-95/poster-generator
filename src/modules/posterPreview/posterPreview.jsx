@@ -9,10 +9,9 @@ const PosterPreview = () => {
   let palette = [];
   const { id } = useParams();
   const SONGS_BREAK = 13;
-
   useEffect(() => {
     const handleSelectedAlbum = async () => {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}}/albumId?albumId=${id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/albumId?albumId=${id}`);
       const data = await response.json();
       printPalette(data.artWork);
       setTimeout(() => {
