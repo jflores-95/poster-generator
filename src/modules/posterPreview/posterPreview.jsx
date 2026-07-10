@@ -12,7 +12,7 @@ const PosterPreview = () => {
 
   useEffect(() => {
     const handleSelectedAlbum = async () => {
-      const response = await fetch(`${process.env.REACT_APP_ALBUM_ENDPOINT}:${process.env.REACT_APP_PORT_API}/albumId?albumId=${id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}}/albumId?albumId=${id}`);
       const data = await response.json();
       printPalette(data.artWork);
       setTimeout(() => {
